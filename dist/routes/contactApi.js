@@ -13,6 +13,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var router = express_1.Router();
+//
 var database = [
     {
         firstname: 'adedayo',
@@ -48,11 +49,14 @@ var databaseLength = database.length;
 router.get('/', function (req, res) {
     var queryKeys = Object.keys(req.query);
     // const queryValues = Object.values(req.query);
+    //  if there is no query parameter then all contacts has been requested
     if (queryKeys.length < 1) {
         res.json(database);
         res.end();
         return;
     }
+    //  There is a query parameter so our code gets here
+    //  if there is a "blocked" query send the approprate response
     if ('blocked' in req.query) {
         var contact_1 = database.filter(function (contact) { return contact.isBlocked === (req.query.blocked === 'true' ? true : false); });
         if (contact_1.length < 1) {
@@ -61,9 +65,8 @@ router.get('/', function (req, res) {
         res.json(contact_1).end();
         return;
     }
-    console.log('Passed');
+    //  There is no blocked query so our code gets here
     var contact = database.filter(function (contact) { return contact.firstname === req.query.firstname; });
-    console.log(contact);
     if (contact.length > 0) {
         res.json(contact);
         return;
@@ -91,7 +94,7 @@ router.get('/:id', function (req, res) {
 router.post('/', function (_a, res) {
     var body = _a.body;
     if (!(body.firstname && body.lastname && body.phone)) {
-        res.status(400).send('Invalid Parameters');
+        res.status(400).send('Invalid Parameters, Firstname, lastname and phone number is compulsory');
         return;
     }
     var contact = __assign({ id: databaseLength + 1, isBlocked: false, address: null }, body);
@@ -101,13 +104,21 @@ router.post('/', function (_a, res) {
 });
 /* Contact Api Patch Methods */
 router.patch('/:firstname/:lastname', function (req, res) {
-    var contact = database.find(function (cont) { return cont.firstname === req.params.firstname && cont.lastname === req.params.lastname; });
-    if (contact) {
-        contact.firstname = req.body.firstname || contact.firstname;
-        contact.lastname = req.body.lastname || contact.lastname;
-        contact.isBlocked = req.body.isBlocked || contact.isBlocked;
-        contact.phone = req.body.phone || contact.phone;
-        res.json(contact).end('Done');
+    var index = database.findIndex(function (cont) { return cont.firstname === req.params.firstname && cont.lastname === req.params.lastname; });
+    if (index > -1) {
+        database[index] = __assign({}, database[index], req.body);
+        res.json(database[index]).end('Done');
+        return;
+    }
+    res.sendStatus(404);
+});
+/* Contact Api PUT Methods */
+router.put('/:firstname/:lastname', function (req, res) {
+    var index = database.findIndex(function (cont) { return cont.firstname === req.params.firstname && cont.lastname === req.params.lastname; });
+    if (index > -1) {
+        database[index] = __assign({}, database[index], req.body);
+        res.json(database[index]).end('Done');
+        return;
     }
     res.sendStatus(404);
 });

@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 const router = Router();
-
+//
 const database: Array<{
   firstname: string;
   lastname: string;
@@ -47,11 +47,15 @@ router.get('/', function(req, res) {
   const queryKeys = Object.keys(req.query);
   // const queryValues = Object.values(req.query);
 
+  //  if there is no query parameter then all contacts has been requested
   if (queryKeys.length < 1) {
     res.json(database);
     res.end();
     return;
   }
+
+  //  There is a query parameter so our code gets here
+  //  if there is a "blocked" query send the approprate response
   if ('blocked' in req.query) {
     const contact = database.filter(
       contact => contact.isBlocked === (req.query.blocked === 'true' ? true : false)
@@ -62,9 +66,9 @@ router.get('/', function(req, res) {
     res.json(contact).end();
     return;
   }
-  console.log('Passed');
+
+  //  There is no blocked query so our code gets here
   const contact = database.filter(contact => contact.firstname === req.query.firstname);
-  console.log(contact);
   if (contact.length > 0) {
     res.json(contact);
     return;
@@ -97,7 +101,7 @@ router.get('/:id', (req, res) => {
 /* Contact Api Post Methods */
 router.post('/', function({ body }, res) {
   if (!(body.firstname && body.lastname && body.phone)) {
-    res.status(400).send('Invalid Parameters');
+    res.status(400).send('Invalid Parameters, Firstname, lastname and phone number is compulsory');
     return;
   }
   const contact = { id: databaseLength + 1, isBlocked: false, address: null, ...body };
@@ -108,15 +112,28 @@ router.post('/', function({ body }, res) {
 
 /* Contact Api Patch Methods */
 router.patch('/:firstname/:lastname', (req, res) => {
-  const contact = database.find(
+  let index: number = database.findIndex(
     cont => cont.firstname === req.params.firstname && cont.lastname === req.params.lastname
   );
-  if (contact) {
-    contact.firstname = req.body.firstname || contact.firstname;
-    contact.lastname = req.body.lastname || contact.lastname;
-    contact.isBlocked = req.body.isBlocked || contact.isBlocked;
-    contact.phone = req.body.phone || contact.phone;
-    res.json(contact).end('Done')
+  if (index > -1) {
+    database[index] = { ...database[index], ...req.body };
+    res.json(database[index]).end('Done');
+
+    return;
+  }
+  res.sendStatus(404);
+});
+
+/* Contact Api PUT Methods */
+router.put('/:firstname/:lastname', (req, res) => {
+  let index: number = database.findIndex(
+    cont => cont.firstname === req.params.firstname && cont.lastname === req.params.lastname
+  );
+  if (index > -1) {
+    database[index] = { ...database[index], ...req.body };
+    res.json(database[index]).end('Done');
+
+    return;
   }
   res.sendStatus(404);
 });
