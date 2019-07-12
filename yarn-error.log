@@ -1,0 +1,50 @@
+Arguments: 
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.16.0/libexec/bin/yarn.js add —dev typescript @types/node@10.14.15
+
+PATH: 
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+Yarn version: 
+  1.16.0
+
+Node version: 
+  10.15.3
+
+Platform: 
+  darwin x64
+
+Trace: 
+  TypeError [ERR_UNESCAPED_CHARACTERS]: https://registry.yarnpkg.com/—dev: Request path contains unescaped characters
+      at new ClientRequest (_http_client.js:115:13)
+      at Object.request (https.js:281:10)
+      at Request.module.exports.Request.start (/usr/local/Cellar/yarn/1.16.0/libexec/lib/cli.js:130152:32)
+      at Request.module.exports.Request.end (/usr/local/Cellar/yarn/1.16.0/libexec/lib/cli.js:130911:10)
+      at end (/usr/local/Cellar/yarn/1.16.0/libexec/lib/cli.js:129965:14)
+      at Immediate.<anonymous> (/usr/local/Cellar/yarn/1.16.0/libexec/lib/cli.js:129979:7)
+      at runCallback (timers.js:705:18)
+      at tryOnImmediate (timers.js:676:5)
+      at processImmediate (timers.js:658:5)
+
+npm manifest: 
+  {
+    "name": "express-bond",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "start": "node ./bin/www"
+    },
+    "dependencies": {
+      "cookie-parser": "~1.4.4",
+      "debug": "~2.6.9",
+      "express": "~4.16.1",
+      "http-errors": "~1.6.3",
+      "jade": "~1.11.0",
+      "morgan": "~1.9.1"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
