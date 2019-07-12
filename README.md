@@ -39,3 +39,5 @@ Although your spec can be a living document, be aware that with REST, you can br
 Hence, put some thought into your design.
 
 # [Specifications For Contact Api](specs/contact-api-specs.md)
+
+# Start your server with `npm start`
