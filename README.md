@@ -12,7 +12,6 @@ Design the API backend for a contacts app that is able to
 
 Ensure that all your functions are properly tested.
 
-
 ---
 
 Start by writing your API specification in a docs/spec.md file
@@ -38,3 +37,5 @@ You are eventually going to write tests that ensure that your specification is c
 Although your spec can be a living document, be aware that with REST, you can break clients that already implement a version of your API if you change the API.
 
 Hence, put some thought into your design.
+
+# [Specifications For Contact Api](specs/contact-api-specs.md)

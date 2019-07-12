@@ -7,8 +7,8 @@
 ---
 ##  Get All Contacts 
 To get list of all contact, send a **`GET`** request to the endpoint below:
-```
-/api/contacts
+```js
+GET /api/contacts
 ```
 This is going to return a list of all contactd blocked and unblocked.
 
@@ -17,22 +17,22 @@ This is going to return a list of all contactd blocked and unblocked.
 
 ##  Get All UnBlocked Contacts 
 To get list of all unblocked contact, send a **`GET`** request to the endpoint below:
-```
-/api/contacts?blocked=false
+```js
+GET /api/contacts?blocked=false
 ```
 ---
 
 ##  Get All Blocked Contacts 
  To get list of all blocked contact, send a **`GET`** request to the endpoint below:
-```
-/api/contacts?blocked=true
+```js
+GET /api/contacts?blocked=true
 ```
 ---
 
 ##  Add New Contact
  To add a contact to the existing contact list, send a **`POST`** request, with a body to the endpoint:
-```
-/api/contacts
+```js
+POST /api/contacts
 ```
 
 > **Note:** The contant type must be set to application/json and the body must folow this format:
@@ -50,8 +50,8 @@ if you choose to block a contact by default you should add a property called **`
 
 ##  Edit Existing Contact
  This can be achieved by making a **`PATCH`** request to the endpoint:
-```
-api/contacts/'firstname'/'lastname'
+```js
+PATCH api/contacts/'firstname'/'lastname'
 ```
 
 where **`firstname`** and **`lastname`** should be replaced with the person's pre-existing first and last name respectively.
@@ -61,8 +61,8 @@ where **`firstname`** and **`lastname`** should be replaced with the person's pr
 ---
 ##  Add New Information To Existing Contact
  This can be achieved by making a **`PUT`** request to the endpoint:
-```
-api/contacts/'firstname'/'lastname'
+```js
+PUT api/contacts/'firstname'/'lastname'
 ```
 
 where **`firstname`** and **`lastname`** should be replaced with the person's pre-existing first and last name respectively.
@@ -73,8 +73,8 @@ where **`firstname`** and **`lastname`** should be replaced with the person's pr
 
 ##  Get Single Contact
 ### This can be achieved by making a get request to the following api
-```
-api/contacts/firstname/lastname
+```js
+GET api/contacts/firstname/lastname
 ```
 where firstname and lastname should be replaced with the person's pre-existing first and last name respectively.
 
@@ -82,8 +82,8 @@ where firstname and lastname should be replaced with the person's pre-existing f
 
 ##  Block Single Contact
 ### This can be achieved by making a patch request to the following api
-```
-api/contacts/firstname/lastname?blocked=true
+```js
+PATCH api/contacts/firstname/lastname?blocked=true
 ```
 where firstname and lastname should be replaced with the person's pre-existing first and last name respectively.
 
@@ -91,7 +91,7 @@ where firstname and lastname should be replaced with the person's pre-existing f
 
 ##  Delete Single Contact
 ### This can be achieved by making a delete request to the following api
-```
-api/contacts/firstname/lastname
+```js
+DELETE api/contacts/firstname/lastname
 ```
 where **`firstname`** and **`lastname`** should be replaced with the person's pre-existing first and last name respectively.
