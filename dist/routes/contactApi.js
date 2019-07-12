@@ -18,21 +18,50 @@ var database = [
         firstname: 'adedayo',
         lastname: 'adedunye',
         phone: '08066069526',
-        id: 1
+        id: 1,
+        isBlocked: false
+    },
+    {
+        firstname: 'node',
+        lastname: 'py',
+        phone: '08066069526',
+        id: 2,
+        isBlocked: true
+    },
+    {
+        firstname: 'node',
+        lastname: 'sammy',
+        phone: '08066069526',
+        id: 3,
+        isBlocked: false
+    },
+    {
+        firstname: 'mon',
+        lastname: 'py',
+        phone: '08066069526',
+        id: 4,
+        isBlocked: true
     }
 ];
 var databaseLength = database.length;
-/* Contact Api Methods. */
+/* Contact Api Get Methods. */
 router.get('/', function (req, res) {
     var queryKeys = Object.keys(req.query);
-    var queryValues = Object.values(req.query);
-    console.log(queryKeys);
-    console.log(queryValues);
+    // const queryValues = Object.values(req.query);
     if (queryKeys.length < 1) {
         res.json(database);
         res.end();
         return;
     }
+    if ('blocked' in req.query) {
+        var contact_1 = database.filter(function (contact) { return contact.isBlocked === (req.query.blocked === 'true' ? true : false); });
+        if (contact_1.length < 1) {
+            res.status(404).end('No Contact Found');
+        }
+        res.json(contact_1).end();
+        return;
+    }
+    console.log('Passed');
     var contact = database.filter(function (contact) { return contact.firstname === req.query.firstname; });
     console.log(contact);
     if (contact.length > 0) {
@@ -58,6 +87,7 @@ router.get('/:id', function (req, res) {
     res.json(contact);
     res.end();
 });
+/* Contact Api Post Methods */
 router.post('/', function (_a, res) {
     var body = _a.body;
     if (!(body.firstname && body.lastname && body.phone)) {
@@ -69,6 +99,19 @@ router.post('/', function (_a, res) {
     databaseLength++;
     res.send(contact);
 });
+/* Contact Api Patch Methods */
+router.patch('/:firstname/:lastname', function (req, res) {
+    var contact = database.find(function (cont) { return cont.firstname === req.params.firstname && cont.lastname === req.params.lastname; });
+    if (contact) {
+        contact.firstname = req.body.firstname || contact.firstname;
+        contact.lastname = req.body.lastname || contact.lastname;
+        contact.isBlocked = req.body.isBlocked || contact.isBlocked;
+        contact.phone = req.body.phone || contact.phone;
+        res.json(contact).end('Done');
+    }
+    res.sendStatus(404);
+});
+/* Contact Api Delete Methods */
 router.delete('/:firstname/:lastname', function (req, res) {
     var index = database.findIndex(function (contact) { return contact.firstname === req.params.firstname && contact.lastname === req.params.lastname; });
     if (index > -1) {
