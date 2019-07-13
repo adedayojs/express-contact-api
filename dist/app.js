@@ -37,5 +37,5 @@ app.use(function (err, req, res, _next) {
     res.status(err.status || 500);
     res.render('error');
 });
-exports.default = app;
+module.exports = app;
 //# sourceMappingURL=app.js.map
