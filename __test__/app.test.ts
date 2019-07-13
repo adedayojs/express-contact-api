@@ -48,3 +48,39 @@ test('Database should respond with error 404 if post endpoint is wrong', async (
   expect(result.body.id).toBeUndefined();
 });
 
+
+/*          GET Endpoint Testing            */
+
+test('Get Request, Response should contain a specified object', async () => {
+    const contact: {} = {
+      firstname: 'adedayo',
+      lastname: 'adedunye',
+      phone: '08066069526',
+      id: 1,
+      isBlocked: false
+    };
+    const result = await request(app).get('/api/contacts');
+    expect(result.body).toContainEqual(contact);
+  });
+  
+  test('Get Request, Response should contain a specified object', async () => {
+    const contact: {} = {
+      firstname: 'python',
+      lastname: 'sammy',
+      phone: '08066069526',
+      isBlocked: false
+    };
+    const contact1: {} = {
+      firstname: 'mongo',
+      lastname: 'node',
+      phone: '08066069526',
+      isBlocked: false
+    };
+    await request(app)
+      .post('/api/contacts')
+      .send(contact)
+      .send(contact1);
+    const result = await request(app).get('/api/contacts?blocked=false');
+    expect(result.body).toContainEqual(contact);
+    expect(result.status).toBe(200);
+  });
