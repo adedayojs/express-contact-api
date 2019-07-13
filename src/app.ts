@@ -42,4 +42,4 @@ app.use(function(err: any, req: express.Request, res: express.Response, _next: e
   res.render('error');
 });
 
-module.exports = app;
+export default app;
