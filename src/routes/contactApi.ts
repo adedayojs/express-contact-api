@@ -8,6 +8,7 @@ const database: Array<{
   phone: string;
   id: number;
   isBlocked: boolean;
+  [key: string]: any;
 }> = [
   {
     firstname: 'adedayo',
@@ -47,7 +48,7 @@ router.get('/', function({ query }, res) {
   const queryKeys = Object.keys(query);
   if (queryKeys.length > 0) {
     const queryAnswer = database.filter(contact => {
-      let result: boolean = false
+      let result: boolean = false;
       for (let ask in query) {
         if (!(query[ask] == contact[ask])) {
           result = false;
