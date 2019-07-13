@@ -44,7 +44,9 @@ POST /api/contacts
     "address":"(any string)"
 }
 ```
-if you choose to block a contact by default you should add a property called **`isBlocked`** to the body of your request and it should be set to false. However if you dont specify that, the isBlocked property would be implictly defined and set to false
+if you choose to block a contact by default you should add a property called **`isBlocked`** to the body of your request and it should be set to false. However if you dont specify that, the isBlocked property would be implictly defined and set to false.
+
+This request returns the data you posted and an automatically generated id for the contact in question
 
 ---
 
@@ -93,5 +95,10 @@ where firstname and lastname should be replaced with the person's pre-existing f
 ### This can be achieved by making a delete request to the following api
 ```js
 DELETE api/contacts/firstname/lastname
+
+or
+
+
+DELETE api/contacts/id/
 ```
 where **`firstname`** and **`lastname`** should be replaced with the person's pre-existing first and last name respectively.
