@@ -46,9 +46,26 @@ var database = [
 ];
 var databaseLength = database.length;
 /* Contact Api Get Methods. */
-router.get('/', function (req, res) {
-    var queryKeys = Object.keys(req.query);
-    // const queryValues = Object.values(req.query);
+router.get('/', function (_a, res) {
+    var query = _a.query;
+    var queryKeys = Object.keys(query);
+    if (queryKeys.length > 0) {
+        var queryAnswer = database.filter(function (contact) {
+            var result = false;
+            for (var ask in query) {
+                if (!(query[ask] == contact[ask])) {
+                    result = false;
+                    return result;
+                }
+                else {
+                    result = true;
+                }
+            }
+            return result;
+        });
+        res.json(queryAnswer).end('Done');
+        return;
+    }
     //  if there is no query parameter then all contacts has been requested
     if (queryKeys.length < 1) {
         res.json(database);
@@ -57,8 +74,8 @@ router.get('/', function (req, res) {
     }
     //  There is a query parameter so our code gets here
     //  if there is a "blocked" query send the approprate response
-    if ('blocked' in req.query) {
-        var contact_1 = database.filter(function (contact) { return contact.isBlocked === (req.query.blocked === 'true' ? true : false); });
+    if ('blocked' in query) {
+        var contact_1 = database.filter(function (contact) { return contact.isBlocked === (query.blocked === 'true' ? true : false); });
         if (contact_1.length < 1) {
             res.status(404).end('No Contact Found');
         }
@@ -66,7 +83,7 @@ router.get('/', function (req, res) {
         return;
     }
     //  There is no blocked query so our code gets here
-    var contact = database.filter(function (contact) { return contact.firstname === req.query.firstname; });
+    var contact = database.filter(function (contact) { return contact.firstname === query.firstname; });
     if (contact.length > 0) {
         res.json(contact);
         return;

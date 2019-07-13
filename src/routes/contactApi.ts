@@ -43,9 +43,24 @@ let databaseLength: number = database.length;
 
 /* Contact Api Get Methods. */
 
-router.get('/', function(req, res) {
-  const queryKeys = Object.keys(req.query);
-  // const queryValues = Object.values(req.query);
+router.get('/', function({ query }, res) {
+  const queryKeys = Object.keys(query);
+  if (queryKeys.length > 0) {
+    const queryAnswer = database.filter(contact => {
+      let result: boolean = false
+      for (let ask in query) {
+        if (!(query[ask] == contact[ask])) {
+          result = false;
+          return result;
+        } else {
+          result = true;
+        }
+      }
+      return result;
+    });
+    res.json(queryAnswer).end('Done');
+    return;
+  }
 
   //  if there is no query parameter then all contacts has been requested
   if (queryKeys.length < 1) {
@@ -56,9 +71,9 @@ router.get('/', function(req, res) {
 
   //  There is a query parameter so our code gets here
   //  if there is a "blocked" query send the approprate response
-  if ('blocked' in req.query) {
+  if ('blocked' in query) {
     const contact = database.filter(
-      contact => contact.isBlocked === (req.query.blocked === 'true' ? true : false)
+      contact => contact.isBlocked === (query.blocked === 'true' ? true : false)
     );
     if (contact.length < 1) {
       res.status(404).end('No Contact Found');
@@ -68,7 +83,7 @@ router.get('/', function(req, res) {
   }
 
   //  There is no blocked query so our code gets here
-  const contact = database.filter(contact => contact.firstname === req.query.firstname);
+  const contact = database.filter(contact => contact.firstname === query.firstname);
   if (contact.length > 0) {
     res.json(contact);
     return;
