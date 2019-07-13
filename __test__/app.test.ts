@@ -15,7 +15,7 @@ test('Database should contain a contact after posting to it', async () => {
     firstname: 'testing1',
     lastname: 'nametesting',
     phone: '08066069526',
-    isBlocked: false
+    blocked: "false"
   };
   const result = await request(app)
     .post('/api/contacts')
@@ -27,7 +27,7 @@ test('Database should contain a contact after posting to it', async () => {
 test('Database should respond with bad request if post data is wrong', async () => {
   const contact: {} = {
     phone: '08066069526',
-    isBlocked: false
+    blocked: "false"
   };
   const result = await request(app)
     .post('/api/contacts')
@@ -39,7 +39,7 @@ test('Database should respond with bad request if post data is wrong', async () 
 test('Database should respond with error 404 if post endpoint is wrong', async () => {
   const contact: {} = {
     phone: '08066069526',
-    isBlocked: false
+    blocked: "false"
   };
   const result = await request(app)
     .post('/api/')
@@ -57,7 +57,7 @@ test('Get Request, Response should contain a specified object', async () => {
       lastname: 'adedunye',
       phone: '08066069526',
       id: 1,
-      isBlocked: false
+      blocked: "false"
     };
     const result = await request(app).get('/api/contacts');
     expect(result.body).toContainEqual(contact);
@@ -68,13 +68,13 @@ test('Get Request, Response should contain a specified object', async () => {
       firstname: 'python',
       lastname: 'sammy',
       phone: '08066069526',
-      isBlocked: false
+      blocked: "false"
     };
     const contact1: {} = {
       firstname: 'mongo',
       lastname: 'node',
       phone: '08066069526',
-      isBlocked: false
+      blocked: "false"
     };
     await request(app)
       .post('/api/contacts')

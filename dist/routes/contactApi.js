@@ -20,28 +20,28 @@ var database = [
         lastname: 'adedunye',
         phone: '08066069526',
         id: 1,
-        isBlocked: false
+        blocked: "false"
     },
     {
         firstname: 'node',
         lastname: 'py',
         phone: '08066069526',
         id: 2,
-        isBlocked: true
+        blocked: "true"
     },
     {
         firstname: 'node',
         lastname: 'sammy',
         phone: '08066069526',
         id: 3,
-        isBlocked: false
+        blocked: "false"
     },
     {
         firstname: 'mon',
         lastname: 'py',
         phone: '08066069526',
         id: 4,
-        isBlocked: true
+        blocked: "true"
     }
 ];
 var databaseLength = database.length;
@@ -70,16 +70,6 @@ router.get('/', function (_a, res) {
     if (queryKeys.length < 1) {
         res.json(database);
         res.end();
-        return;
-    }
-    //  There is a query parameter so our code gets here
-    //  if there is a "blocked" query send the approprate response
-    if ('blocked' in query) {
-        var contact_1 = database.filter(function (contact) { return contact.isBlocked === (query.blocked === 'true' ? true : false); });
-        if (contact_1.length < 1) {
-            res.status(404).end('No Contact Found');
-        }
-        res.json(contact_1).end();
         return;
     }
     //  There is no blocked query so our code gets here
