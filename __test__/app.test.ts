@@ -3,5 +3,7 @@ import request from 'supertest';
 
 test('It should return all is well', async () => {
   const result = await request(app).get('/api');
-  expect(result).toBe({ message: 'all is well' });
+  const msg: { message: string } = { message: 'all is well' };
+  expect(result.body).toEqual(msg);
+  expect(result.status).toBe(200);
 });
