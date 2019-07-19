@@ -15,28 +15,28 @@ const database: Array<{
     lastname: 'adedunye',
     phone: '08066069526',
     id: 1,
-    blocked: "false"
+    blocked: 'false'
   },
   {
     firstname: 'node',
     lastname: 'py',
     phone: '08066069526',
     id: 2,
-    blocked: "true"
+    blocked: 'true'
   },
   {
     firstname: 'node',
     lastname: 'sammy',
     phone: '08066069526',
     id: 3,
-    blocked: "false"
+    blocked: 'false'
   },
   {
     firstname: 'mon',
     lastname: 'py',
     phone: '08066069526',
     id: 4,
-    blocked: "true"
+    blocked: 'true'
   }
 ];
 
@@ -45,21 +45,33 @@ let databaseLength: number = database.length;
 /* Contact Api Get Methods. */
 
 router.get('/', function({ query }, res) {
+  console.log(query);
+
+  //  This takes my query parameters which are stored as an object and runs a comparison
+  //  algorithm against each object in my database of array of objects
+  //  Returns any object that meets the query parameters
   const queryKeys = Object.keys(query);
+  console.log(queryKeys);
   if (queryKeys.length > 0) {
     const queryAnswer = database.filter(contact => {
-      let result: boolean = false;
+      let result: boolean;
       for (let ask in query) {
         if (!(query[ask] == contact[ask])) {
           result = false;
           return result;
-        } else {
-          result = true;
         }
       }
+      result = true;
       return result;
     });
-    res.json(queryAnswer).end('Done');
+    if (queryAnswer.length > 0) {
+      res.json(queryAnswer);
+      return;
+    }
+    res
+      .status(404)
+      .send('Contact Not Found')
+      .end();
     return;
   }
 
@@ -69,15 +81,6 @@ router.get('/', function({ query }, res) {
     res.end();
     return;
   }
-
-  //  There is no blocked query so our code gets here
-  const contact = database.filter(contact => contact.firstname === query.firstname);
-  if (contact.length > 0) {
-    res.json(contact);
-    return;
-  }
-  res.status(404).send('Requested Contact not found');
-  res.end();
 });
 
 router.get('/:firstname/:lastname', function(req, res) {
@@ -107,7 +110,7 @@ router.post('/', function({ body }, res) {
     res.status(400).send('Invalid Parameters, Firstname, lastname and phone number is compulsory');
     return;
   }
-  const contact = { id: databaseLength + 1, isBlocked: false, address: null, ...body };
+  const contact = { id: databaseLength + 1, blocked: 'false', address: 'null', ...body };
   database.push(contact);
   databaseLength++;
   res.send(contact);

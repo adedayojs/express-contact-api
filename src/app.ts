@@ -10,7 +10,11 @@ import homepage from './routes/homepage';
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '../views'));
+const viewPath = path.join(__dirname, '../views')
+app.set('views', viewPath );
+
+//'/Users/techkny/Downloads/express-bond/views'
+
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));

@@ -12,7 +12,9 @@ var contactApi_1 = __importDefault(require("./routes/contactApi"));
 var homepage_1 = __importDefault(require("./routes/homepage"));
 var app = express_1.default();
 // view engine setup
-app.set('views', path_1.default.join(__dirname, '../views'));
+var viewPath = path_1.default.join(__dirname, '../views');
+app.set('views', viewPath);
+//'/Users/techkny/Downloads/express-bond/views'
 app.set('view engine', 'jade');
 app.use(morgan_1.default('dev'));
 app.use(express_1.default.json());

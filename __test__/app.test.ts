@@ -8,6 +8,10 @@ test('It should return all is well', async () => {
   expect(result.status).toBe(200);
 });
 
+test('Test for / endpoint',async function(){
+    const response = await request(app).get('/api');
+    console.log(response)
+})
 /*      Post Endpoint Testing       */
 
 test('Database should contain a contact after posting to it', async () => {
@@ -81,6 +85,6 @@ test('Get Request, Response should contain a specified object', async () => {
       .send(contact)
       .send(contact1);
     const result = await request(app).get('/api/contacts?blocked=false');
-    expect(result.body).toContainEqual(contact);
+    expect(result.body).toContain(contact)
     expect(result.status).toBe(200);
   });
