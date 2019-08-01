@@ -44,7 +44,7 @@ let databaseLength: number = database.length;
 
 /* Contact Api Get Methods. */
 
-router.get('/', function({ query }, res) {
+router.get('/', function({ query }, res) { 
   console.log(query);
 
   //  This takes my query parameters which are stored as an object and runs a comparison
