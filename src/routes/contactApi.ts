@@ -44,6 +44,7 @@ let databaseLength: number = database.length;
 
 /* Contact Api Get Methods. */
 
+
 router.get('/', function({ query }, res) { 
   console.log(query);
 
