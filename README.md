@@ -1,4 +1,4 @@
-# Contacts App API
+# Contacts App API    [![CircleCI](https://circleci.com/gh/adedayojs/express-contact-api.svg?style=shield)](https://circleci.com/gh/adedayojs/express-contact-api)
 
 Design the API backend for a contacts app that is able to
 
