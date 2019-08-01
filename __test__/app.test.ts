@@ -67,24 +67,24 @@ test('Get Request, Response should contain a specified object', async () => {
     expect(result.body).toContainEqual(contact);
   });
   
-  test('Get Request, Response should contain a specified object', async () => {
-    const contact: {} = {
-      firstname: 'python',
-      lastname: 'sammy',
-      phone: '08066069526',
-      blocked: "false"
-    };
-    const contact1: {} = {
-      firstname: 'mongo',
-      lastname: 'node',
-      phone: '08066069526',
-      blocked: "false"
-    };
-    await request(app)
-      .post('/api/contacts')
-      .send(contact)
-      .send(contact1);
-    const result = await request(app).get('/api/contacts?blocked=false');
-    expect(result.body).toContain(contact)
-    expect(result.status).toBe(200);
-  });
+  // test('Get Request, Response should contain a specified object', async () => {
+  //   const contact: {} = {
+  //     firstname: 'python',
+  //     lastname: 'sammy',
+  //     phone: '08066069526',
+  //     blocked: "false"
+  //   };
+  //   const contact1: {} = {
+  //     firstname: 'mongo',
+  //     lastname: 'node',
+  //     phone: '08066069526',
+  //     blocked: "false"
+  //   };
+  //   await request(app)
+  //     .post('/api/contacts')
+  //     .send(contact)
+  //     .send(contact1);
+  //   const result = await request(app).get('/api/contacts?blocked=false');
+  //   expect(result.body).toContain(contact)
+  //   expect(result.status).toBe(200);
+  // });
